@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/data/user/rabbitliu/work/twister_dev/xcube_dev_branch/xcube_for_twister/xcube/sdk'
+let g:netrw_dirhist_2='/data/user/rabbitliu/work/twister_dev/xcube_dev_branch/xcube_for_twister/twister/tools/onebox_develop_env/public/script'
+let g:netrw_dirhist_3='/data/user/rabbitliu/work/twister_dev/xcube_dev_branch/xcube_for_twister/twister/tools/onebox_develop_env/test_cases/cases/12_test_groupby_optimize'
+let g:netrw_dirhist_4='/data/user/rabbitliu/work/twister_dev/xcube_dev_branch/xcube_for_twister/xcube/twister/share/proto'
