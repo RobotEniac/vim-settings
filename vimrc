@@ -275,3 +275,4 @@ endfunction
 command! -complete=file -nargs=* CppLint call CppLint('<args>')
 
 match DiffAdd '\t'
+xmap ga <Plug>(EasyAlign)
