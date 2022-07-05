@@ -274,5 +274,5 @@ endfunction
 
 command! -complete=file -nargs=* CppLint call CppLint('<args>')
 
-match DiffAdd '\t'
+match DiffAdd '\t' " highlight tab
 xmap ga <Plug>(EasyAlign)
