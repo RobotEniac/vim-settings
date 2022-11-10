@@ -1,3 +1,4 @@
+execute pathogen#infect()
 syntax on
 filetype plugin on
 " colorscheme blue

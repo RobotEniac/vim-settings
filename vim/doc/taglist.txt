@@ -1,8 +1,8 @@
 *taglist.txt*	Plugin for browsing source code
 
 Author: Yegappan Lakshmanan  (yegappan AT yahoo DOT com)
-For Vim version 6.0 and above
-Last change: 2007 May 24
+For Vim version 7.4.1304 and above
+Last change: 2022 July 31
 
 1. Overview 					|taglist-intro|
 2. Taglist on the internet			|taglist-internet|
@@ -12,10 +12,11 @@ Last change: 2007 May 24
 6. Options 					|taglist-options|
 7. Commands 					|taglist-commands|
 8. Global functions 				|taglist-functions|
-9. Extending 					|taglist-extend|
-10. FAQ 					|taglist-faq|
-11. License 					|taglist-license|
-12. Todo					|taglist-todo|
+9. Mappings 					|taglist-mappings|
+10. Extending 					|taglist-extend|
+11. FAQ 					|taglist-faq|
+12. License 					|taglist-license|
+13. Todo					|taglist-todo|
 
 ==============================================================================
 						*taglist-intro*
@@ -52,25 +53,21 @@ programming languages. The "Tag List" plugin provides the following features:
     * The list of tags and files in the taglist can be saved and
       restored across Vim sessions.
     * Provides commands to get the name and prototype of the current tag.
+    * Supports both Vim and Neovim.
     * Runs in both console/terminal and GUI versions of Vim.
-    * Works with the winmanager plugin. Using the winmanager plugin, you
-      can use Vim plugins like the file explorer, buffer explorer and the
-      taglist plugin at the same time like an IDE.
-    * Can be used in both Unix and MS-Windows systems.
+    * Can be used in Linux/Unix, MacOS and MS-Windows systems.
 
 ==============================================================================
 						*taglist-internet*
 2. Taglist on the internet~
 
+The github page for the taglist plugin is at:
+>
+	http://github.com/yegappan/taglist
+<
 The home page of the taglist plugin is at:
 >
 	http://vim-taglist.sourceforge.net/
-<
-You can subscribe to the taglist mailing list to post your questions or
-suggestions for improvement or to send bug reports. Visit the following page
-for subscribing to the mailing list:
->
-	http://groups.yahoo.com/group/taglist
 <
 ==============================================================================
 						*taglist-requirements*
@@ -78,20 +75,25 @@ for subscribing to the mailing list:
 
 The taglist plugin requires the following:
 
-    * Vim version 6.0 and above
-    * Exuberant ctags 5.0 and above
+    * Vim version 7.4.1304 and above
+    * Universal Ctags or Exuberant Ctags
 
-The taglist plugin will work on all the platforms where the exuberant ctags
-utility and Vim are supported (this includes MS-Windows and Unix based
-systems).
+The taglist plugin will work on all the platforms where the Universal ctags or
+the exuberant ctags utility and Vim are supported (this includes MS-Windows,
+MacOS and Linux/Unix based systems).
 
-The taglist plugin relies on the exuberant ctags utility to dynamically
-generate the tag listing.  The exuberant ctags utility must be installed in
-your system to use this plugin.  The exuberant ctags utility is shipped with
-most of the Linux distributions.  You can download the exuberant ctags utility
-from
+The taglist plugin relies on the ctags utility to dynamically generate the tag
+listing.  The ctags utility must be installed in your system to use this
+plugin.  The exuberant ctags utility is shipped with most of the Linux
+distributions.  You can download the exuberant ctags utility from
 >
 	http://ctags.sourceforge.net
+<
+Note that there are no recent releases of exuberant ctags (after 2009).
+Instead of exuberant ctags, you can use the actively maintained Universal
+Ctags (which is compatible with exuberant ctags) which can be downloaded from
+>
+	https://ctags.io
 <
 The taglist plugin doesn't use or create a tags file and there is no need to
 create a tags file to use this plugin. The taglist plugin will not work with
@@ -106,10 +108,10 @@ adding the following line to your .vimrc file:
 The taglist plugin will not work if you run Vim in the restricted mode (using
 the -Z command-line argument).
 
-The taglist plugin uses the Vim system() function to invoke the exuberant
-ctags utility. If Vim is compiled without the system() function then you
-cannot use the taglist plugin. Some of the Linux distributions (Suse) compile
-Vim without the system() function for security reasons.
+The taglist plugin uses the Vim system() function to invoke the ctags utility.
+If Vim is compiled without the system() function then you cannot use the
+taglist plugin. Some of the Linux distributions (Suse) compile Vim without the
+system() function for security reasons.
 
 ==============================================================================
 						*taglist-install*
@@ -128,10 +130,10 @@ Vim without the system() function for security reasons.
    directory, start Vim and run the ":helptags ." command to process the
    taglist help file. Without this step, you cannot jump to the taglist help
    topics.
-3. If the exuberant ctags utility is not present in one of the directories in
-   the PATH environment variable, then set the 'Tlist_Ctags_Cmd' variable to
-   point to the location of the exuberant ctags utility (not to the directory)
-   in the .vimrc file.
+3. If the universal or exuberant ctags utility is not present in one of the
+   directories in the PATH environment variable, then set the
+   'Tlist_Ctags_Cmd' variable to point to the location of the ctags utility
+   (not to the directory) in the .vimrc file.
 4. If you are running a terminal/console version of Vim and the terminal
    doesn't support changing the window width then set the
    'Tlist_Inc_Winwidth' variable to 0 in the .vimrc file.
@@ -195,8 +197,8 @@ creates a normal mode mapping for the <F8> key to toggle the taglist window.
 <
 Add the above mapping to your ~/.vimrc or $HOME/_vimrc file.
 
-To automatically open the taglist window on Vim startup, set the
-'Tlist_Auto_Open' variable to 1.
+To automatically open the taglist window on Vim startup when editing a
+file with a supported file type, set the 'Tlist_Auto_Open' variable to 1.
 
 You can also open the taglist window on startup using the following command
 line:
@@ -599,16 +601,6 @@ selecting the 'Tags->Sort menu by->Name/Order' menu entry.
 You can tear-off the Tags menu and keep it on the side of the Vim window
 for quickly locating the tags.
 
-Using the taglist plugin with the winmanager plugin~
-You can use the taglist plugin with the winmanager plugin. This will allow you
-to use the file explorer, buffer explorer and the taglist plugin at the same
-time in different windows. To use the taglist plugin with the winmanager
-plugin, set 'TagList' in the 'winManagerWindowLayout' variable. For example,
-to use the file explorer plugin and the taglist plugin at the same time, use
-the following setting: >
-
-	let winManagerWindowLayout = 'FileExplorer|TagList'
-<
 Getting help~
 If you have installed the taglist help file (this file), then you can use the
 Vim ":help taglist-<keyword>" command to get help on the various taglist
@@ -705,7 +697,8 @@ the taglist window will not be opened automatically on Vim startup.
 <
 The taglist window is opened only when a supported type of file is opened on
 Vim startup. For example, if you open text files, then the taglist window will
-not be opened.
+not be opened.  If Vim is started without a filename argument, then the
+taglist window is not opened.
 
 						*'Tlist_Auto_Update'*
 Tlist_Auto_Update~
@@ -739,26 +732,32 @@ set the 'Tlist_Compact_Format' variable to 1 to get a compact display.
 <
 						*'Tlist_Ctags_Cmd'*
 Tlist_Ctags_Cmd~
-The 'Tlist_Ctags_Cmd' variable specifies the location (path) of the exuberant
-ctags utility. If exuberant ctags is present in any one of the directories in
-the PATH environment variable, then there is no need to set this variable.
+The 'Tlist_Ctags_Cmd' variable specifies the location (path) of the universal
+or exuberant ctags utility. If ctags is present in any one of the directories
+in the PATH environment variable, then there is no need to set this variable.
 
-The exuberant ctags tool can be installed under different names.  When the
-taglist plugin starts up, if the 'Tlist_Ctags_Cmd' variable is not set, it
-checks for the names exuberant-ctags, exctags, ctags, ctags.exe and tags in
-the PATH environment variable.  If any one of the named executable is found,
-then the Tlist_Ctags_Cmd variable is set to that name.
+The ctags tool can be installed under different names.  When the taglist
+plugin starts up, if the 'Tlist_Ctags_Cmd' variable is not set, it checks for
+the names exuberant-ctags, exctags, ctags, ctags.exe and tags in the PATH
+environment variable.  If any one of the named executable is found, then the
+Tlist_Ctags_Cmd variable is set to that name.
 
-If exuberant ctags is not present in one of the directories specified in the
-PATH environment variable, then set this variable to point to the location of
-the ctags utility in your system. Note that this variable should point to the
-fully qualified exuberant ctags location and NOT to the directory in which
-exuberant ctags is installed. If the exuberant ctags tool is not found in
-either PATH or in the specified location, then the taglist plugin will not be
-loaded. Examples:
+If ctags is not present in one of the directories specified in the PATH
+environment variable, then set this variable to point to the location of the
+ctags utility in your system. Note that this variable should point to the
+fully qualified ctags location and NOT to the directory in which ctags is
+installed. If the ctags tool is not found in either PATH or in the specified
+location, then the taglist plugin will not be loaded.
+Examples:
 >
 	let Tlist_Ctags_Cmd = 'd:\tools\ctags.exe'
 	let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+<
+On Microsoft Windows, if ctags.exe is installed in a directory with space
+characters in the name (e.g. C:\Program Files\ctags\ctags.exe), then you need
+to set the Tlist_Ctags_Cmd variable like this:
+>
+	let Tlist_Ctags_Cmd = '"C:\Program Files\ctags\ctags.exe"'
 <
 						*'Tlist_Display_Prototype'*
 Tlist_Display_Prototype~
@@ -841,6 +840,7 @@ If your terminal doesn't support changing the window width from Vim (older
 version of xterm running in a Unix system) or if you see any weird problems in
 the screen due to the change in the window width or if you prefer not to
 adjust the window width then set the 'Tlist_Inc_Winwidth' variable to zero.
+If you are using GNU Screen, you may want to set this variable to zero.
 CAUTION: If you are using the MS-Windows version of Vim in a MS-DOS command
 window then you must set this variable to zero, otherwise the system may hang
 due to a Vim limitation (explained in :help win32-problems)
@@ -1144,6 +1144,7 @@ The taglist plugin provides several global functions that can be used from
 other Vim plugins to interact with the taglist plugin. These functions are
 described below.
 
+|Tlist_Get_Filenames()|			Return filenames in the taglist
 |Tlist_Update_File_Tags()|		Update the tags for the specified file
 |Tlist_Get_Tag_Prototype_By_Line()|	Return the prototype of the tag at or
 				    	before the specified line number in the
@@ -1151,15 +1152,19 @@ described below.
 |Tlist_Get_Tagname_By_Line()|		Return the name of the tag at or
 					before the specified line number in
 					the specified file.
-|Tlist_Set_App()|			Set the name of the application
-					controlling the taglist window.
+
+					    *Tlist_Get_Filenames()*
+Tlist_Get_Filenames()
+		Returns a list of filenames in the taglist. Each filename is
+		separated by a newline (\n) character. If the taglist is empty
+		an empty string is returned.
 
 					    *Tlist_Update_File_Tags()*
 Tlist_Update_File_Tags({filename}, {filetype})
 		Update the tags for the file {filename}. The second argument
 		specifies the Vim filetype for the file. If the taglist plugin
-		has not processed the file previously, then the exuberant
-		ctags tool is invoked to generate the tags for the file.
+		has not processed the file previously, then the ctags tool is
+		invoked to generate the tags for the file.
 
 					    *Tlist_Get_Tag_Prototype_By_Line()*
 Tlist_Get_Tag_Prototype_By_Line([{filename}, {linenumber}])
@@ -1175,30 +1180,30 @@ Tlist_Get_Tagname_By_Line([{filename}, {linenumber}])
 		are not specified, then the current buffer name and the
 		current line number are used.
 
-					    *Tlist_Set_App()*
-Tlist_Set_App({appname})
-		Set the name of the plugin that controls the taglist plugin
-		window and buffer. This can be used to integrate the taglist
-		plugin with other Vim plugins.
-		
-		For example, the winmanager plugin and the Cream package use
-		this function and specify the appname as "winmanager" and
-		"cream" respectively.
-		
-		By default, the taglist plugin is a stand-alone plugin and
-		controls the taglist window and buffer. If the taglist window
-		is controlled by an external plugin, then the appname should
-		be set appropriately.
+==============================================================================
+						*taglist-mappings*
+9. Mappings~
 
+The taglist plugin provides the following maps:
+
+<plug>(TlistJumpTagUp)		Jump to the nearest tag before the current line.
+<plug>(TlistJumpTagDown)	Jump to the nearest tag after the current line.
+
+You can map these |<Plug>| mappings in your .vimrc to some key.  For example,
+the following commands map [t and ]t: >
+
+    nmap [t <plug>(TlistJumpTagUp)
+    nmap ]t <plug>(TlistJumpTagDown)
+<
 ==============================================================================
 						*taglist-extend*
-9. Extending~
+10. Extending~
 
-The taglist plugin supports all the languages supported by the exuberant ctags
-tool, which includes the following languages: Assembly, ASP, Awk, Beta, C,
-C++, C#, Cobol, Eiffel, Erlang, Fortran, HTML, Java, Javascript, Lisp, Lua,
-Make, Pascal, Perl, PHP, Python, Rexx, Ruby, Scheme, Shell, Slang, SML, Sql,
-TCL, Verilog, Vim and Yacc.
+The taglist plugin supports all the languages supported by the universal or
+exuberant ctags tool, which includes the following languages: Assembly, ASP,
+Awk, Beta, C, C++, C#, Cobol, Eiffel, Erlang, Fortran, HTML, Java, Javascript,
+Lisp, Lua, Make, Pascal, Perl, PHP, Python, Rexx, Ruby, Scheme, Shell, Slang,
+SML, Sql, TCL, Verilog, Vim and Yacc.
 
 You can extend the taglist plugin to add support for new languages and also
 modify the support for the above listed languages.
@@ -1233,11 +1238,11 @@ The format of the value set in the tlist_xxx_settings variable is
 
 The different fields in the value are separated by the ';' character.
 
-The first field 'language_name' is the name used by exuberant ctags to refer
-to this language file. This name can be different from the file type name used
-by Vim. For example, for C++, the language name used by ctags is 'c++' but the
-filetype name used by Vim is 'cpp'. To get the list of language names
-supported by exuberant ctags, use the following command:
+The first field 'language_name' is the name used by universal or exuberant
+ctags to refer to this language file. This name can be different from the file
+type name used by Vim. For example, for C++, the language name used by ctags
+is 'c++' but the filetype name used by Vim is 'cpp'. To get the list of
+language names supported by exuberant ctags, use the following command:
 
 	$ ctags --list-maps=all
 
@@ -1282,6 +1287,10 @@ exuberant ctags, visit the following page:
 
     http://ctags.sourceforge.net/EXTENDING.html
 
+For more information about extending universal ctags, visit the following page:
+
+    https://docs.ctags.io/en/latest
+
 To add support for a new language, set the tlist_xxx_settings variable in the
 ~/.vimrc file appropriately as described above. Replace 'xxx' in the variable
 name with the Vim filetype name for the new language.
@@ -1300,20 +1309,20 @@ are generated for the flags b, c and l respectively.
 
 ==============================================================================
 						*taglist-faq*
-10. Frequently Asked Questions~
+11. Frequently Asked Questions~
 
 Q. The taglist plugin doesn't work. The taglist window is empty and the tags
    defined in a file are not displayed. 
-A. Are you using Vim version 6.0 and above? The taglist plugin relies on the
-   features supported by Vim version 6.0 and above. You can use the following
-   command to get the Vim version:
+A. Are you using Vim version 7.4.1304 and above? The taglist plugin relies on
+   the features supported by Vim version 7.4.1304 and above. You can use the
+   following command to get the Vim version:
 >
 	$ vim --version
 <
-   Are you using exuberant ctags version 5.0 and above? The taglist plugin
-   relies on the features supported by exuberant ctags and will not work with
-   GNU ctags or the Unix ctags utility. You can use the following command to
-   determine whether the ctags installed in your system is exuberant ctags:
+   Are you using Universal ctags or exuberant ctags? The taglist plugin relies
+   on the features supported by these tools and will not work with GNU ctags
+   or the Unix ctags utility. You can use the following command to determine
+   whether the ctags installed in your system is exuberant ctags:
 >
 	$ ctags --version
 <
@@ -1473,17 +1482,17 @@ A. The taglist plugin uses the |CursorHold| autocmd to highlight the current
 
 ==============================================================================
 						*taglist-license*
-11. License~
+12. License~
 Permission is hereby granted to use and distribute the taglist plugin, with or
 without modifications, provided that this copyright notice is copied with it.
 Like anything else that's free, taglist.vim is provided *as is* and comes with
 no warranty of any kind, either expressed or implied. In no event will the
-copyright holder be liable for any damamges resulting from the use of this
+copyright holder be liable for any damages resulting from the use of this
 software.
 
 ==============================================================================
 						*taglist-todo*
-12. Todo~
+13. Todo~
 
 1. Group tags according to the scope and display them. For example,
    group all the tags belonging to a C++/Java class 
