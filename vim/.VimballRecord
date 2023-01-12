@@ -1,2 +1,0 @@
-supertab.vba: call delete('/home/phongchen/.vim/doc/supertab.txt')|call delete('/home/phongchen/.vim/plugin/supertab.vim')
-winmanager.vba: call delete('/home/phongchen/.vim/doc/winmanager.txt')|call delete('/home/phongchen/.vim/plugin/start.gnome')|call delete('/home/phongchen/.vim/plugin/start.kde')|call delete('/home/phongchen/.vim/plugin/winfileexplorer.vim')|call delete('/home/phongchen/.vim/plugin/winmanager.vim')|call delete('/home/phongchen/.vim/plugin/wintagexplorer.vim')
