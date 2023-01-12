@@ -149,7 +149,7 @@ endfunction
 
 autocmd BufEnter *.{log,INFO,WARNING,ERROR,FATAL} nested call SetLogHighLight()
 
-"autocmd BufEnter *.log match DiffAdd '\%>1024v.*'
+autocmd BufEnter *.log match DiffAdd '\%>1024v.*'
 
 " auto insert gtest header inclusion for test source file
 autocmd BufNewFile *_test.{cpp,cxx,cc} nested :normal i#include "thirdparty/gtest/gtest.h"
@@ -275,5 +275,5 @@ endfunction
 
 command! -complete=file -nargs=* CppLint call CppLint('<args>')
 
-match DiffAdd '\t' " highlight tab
+" match DiffAdd '\t' " highlight tab
 xmap ga <Plug>(EasyAlign)
