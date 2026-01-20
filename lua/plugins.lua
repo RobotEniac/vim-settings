@@ -108,6 +108,9 @@ return packer.startup({
 		-- color
 		use("norcalli/nvim-colorizer.lua")
 
+        -- nio
+        use("nvim-neotest/nvim-nio")
+
 		--debug
 		use("mfussenegger/nvim-dap")
 		use("leoluz/nvim-dap-go")

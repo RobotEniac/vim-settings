@@ -4,17 +4,29 @@ if not status then
     return
 end
 
+local function my_on_attach(bufnr)
+  local api = require("nvim-tree.api")
+
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- 1. Load default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- 2. Add your custom mappings
+  vim.keymap.set('n', 'u', api.tree.change_root_to_parent, opts('Up'))
+  -- To remove a default mapping, use:
+  -- vim.keymap.del('n', '<C-e>', { buffer = bufnr })
+end
+
 nvim_tree.setup({
 	sort_by = "case_sensitive",
 	view = {
 		adaptive_size = false,
 		width = 30,
-		mappings = {
-			list = {
-				{ key = "u", action = "dir_up" },
-			},
-		},
 	},
+    on_attach = my_on_attach,
 	renderer = {
 		add_trailing = true,
 		group_empty = false,

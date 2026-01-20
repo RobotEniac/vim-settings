@@ -7,23 +7,22 @@ if not status then
 	return
 end
 
-local servers = {
-	--	clangd = require("lsp-config.servers.clangd"),
-	ccls = require("lsp-config.servers.ccls"),
-	gopls = require("lsp-config.servers.gopls"),
-	sumneko_lua = require("lsp-config.servers.lua"),
-	pyright = require("lsp-config.servers.pyright"),
-	sqls = require("lsp-config.servers.sqls"),
-	bashls = require("lsp-config.servers.bashls"),
-	bufls = require("lsp-config.servers.bufls"),
-}
+-- Enable the gopls language server
+vim.lsp.enable("gopls")
 
-for name, config in pairs(servers) do
-	if config ~= nil and type(config) == "table" then
-		-- 自定义初始化配置文件必须实现on_setup 方法
-		config.on_setup(lspconfig[name])
-	else
-		-- 使用默认参数
-		lspconfig[name].setup({})
-	end
-end
+-- Optional: Add extra configuration for gopls (e.g., specific analyzers, formatting on save)
+vim.lsp.config("gopls", {
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+            },
+            staticcheck = true,
+        },
+    },
+    -- Optional: Format on save
+    -- This requires a separate auto command setup or a dedicated formatting plugin
+    -- autocmd BufWritePre *.go lua vim.lsp.buf.format()
+})
+
