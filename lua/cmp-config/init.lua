@@ -14,9 +14,7 @@ end
 require("cmp-config.luasnip")
 
 --local unlinkgrp = vim.api.nvim_create_augroup("UnlinkSnippetOnModeChange", { clear = true })
---vim.api.nvim_create_autocmd("ModeChanged", {
---	group = unlinkgrp,
---	pattern = { "s:n", "i:*" },
+--vim.api.nvim_create_autocmd("ModeChanged", { group = unlinkgrp, pattern = { "s:n", "i:*" },
 --	desc = "Forget the current snippet when leaving the insert mode",
 --	callback = function(evt)
 --		if ls.session and ls.session.current_nodes[evt.buf] and not ls.session.jump_active then
@@ -30,31 +28,31 @@ require("luasnip/loaders/from_vscode").lazy_load()
 
 -- UI
 local kind_icons = {
-	Text = "",
-	Method = "",
-	Function = "",
+	Text = "󰉿",
+	Method = "󰆧",
+	Function = "󰊕",
 	Constructor = "",
-	Field = "",
-	Variable = "",
-	Class = "ﴯ",
+	Field = "󰜢",
+	Variable = "󰀫",
+	Class = "󰠱",
 	Interface = "",
 	Module = "",
-	Property = "ﰠ",
-	Unit = "",
-	Value = "",
+	Property = "󰜢",
+	Unit = "󰑭",
+	Value = "󰎠",
 	Enum = "",
-	Keyword = "",
+	Keyword = "󰌋",
 	Snippet = "",
-	Color = "",
-	File = "",
-	Reference = "",
-	Folder = "",
+	Color = "󰏘",
+	File = "󰈙",
+	Reference = "󰈇",
+	Folder = "󰉋",
 	EnumMember = "",
-	Constant = "",
-	Struct = "",
+	Constant = "󰏿",
+	Struct = "󰙅",
 	Event = "",
-	Operator = "",
-	TypeParameter = "",
+	Operator = "󰆕",
+	TypeParameter = "",
 }
 
 -- Setup nvim-cmp.

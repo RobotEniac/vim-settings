@@ -20,4 +20,3 @@ require("autocmd")
 -- colorscheme
 require("colorscheme")
 
-require("ibl").setup()

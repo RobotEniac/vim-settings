@@ -1,6 +1,4 @@
--- In your init.lua
--- This assumes rust-analyzer is in your PATH
-
+-- rust
 vim.lsp.config.rust_analyzer = {
   cmd = { 'rust-analyzer' },
   filetypes = { 'rust' },
