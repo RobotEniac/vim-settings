@@ -4,3 +4,5 @@ require("lsp-config.setup")
 require("lsp-config.rust")
 require("lsp-config.gopls")
 require("lsp-config.lua_ls")
+require("lsp-config.clangd")
+
