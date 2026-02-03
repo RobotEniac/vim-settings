@@ -8,10 +8,12 @@ if wezterm.config_builder then
 end
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
+local mod = "CMD"
 
 if is_windows then
     config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
     config.initial_cols = 120
+    mod = "ALT"
 end
 
 config = {
@@ -36,12 +38,13 @@ config = {
             font = wezterm.font("SauceCodePro Nerd Font Mono", { weight = "Bold", italic = false }),
         },
     },
-    color_scheme = "Dracula",
+    color_scheme = "Dracula (Official)",
     use_fancy_tab_bar = false,
     enable_tab_bar = true,
     hide_tab_bar_if_only_one_tab = true,
     tab_bar_at_bottom = true,
     tab_max_width = 64,
+    -- window_decorations = "RESIZE",
     window_padding = {
         left = "1.0cell",
         right = "0.2cell",
@@ -127,6 +130,10 @@ config.keys = {
         mods = 'CMD',
         action = act.CloseCurrentPane { confirm = true },
     },
+    { key = 'h', mods = mod, action = wezterm.action.ActivatePaneDirection 'Left' },
+    { key = 'l', mods = mod, action = wezterm.action.ActivatePaneDirection 'Right' },
+    { key = 'k', mods = mod, action = wezterm.action.ActivatePaneDirection 'Up' },
+    { key = 'j', mods = mod, action = wezterm.action.ActivatePaneDirection 'Down' },
 }
 
 return config
